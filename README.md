@@ -1,50 +1,46 @@
+
+
 ````md
-# Hyperliquid Order Book Slippage & Safe Position Sizing
+# Hyperliquid Slippage Analysis
 
-<div align="center">
+This project analyzes **order book depth on Hyperliquid** to understand how much of an asset can be bought without causing high slippage.
 
-[![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)]
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)]
-[![Security: bandit](https://img.shields.io/badge/security-bandit-green.svg)]
-[![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)]
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)]
-
-**Liquidity-aware execution and slippage analysis using Hyperliquid L2 Order Books**
-
-</div>
+The goal is to simulate large market buy orders using **Level-2 (L2) order book data** and determine a **safe position size** based on a fixed slippage limit.
 
 ---
 
-## Project Context
+## Problem Statement
 
-A paper portfolio ignores liquidity.  
-This project analyzes **real execution risk** using **Hyperliquid Level-2 order book depth** to answer:
+Paper portfolios assume perfect liquidity, which is not realistic.
 
-> **How much of an asset can be bought before price impact exceeds acceptable slippage?**
+This project answers:
 
-The repository simulates large market buy orders, computes execution slippage, and defines **safe position size caps** under a strict risk constraint.
-
----
-
-## Objective & Scope
-
-- Exchange: **Hyperliquid**
-- Assets: **ARB, OP, SUI**
-- Rebalance size: **$1,000,000**
-- Order sizes tested: **$50k, $200k, $1M**
-- Slippage tolerance: **≤ 1%**
+**How much of a coin can we buy before slippage exceeds 1%?**
 
 ---
 
-## Methodology (Analysis Logic)
+## Scope
 
-1. Fetch **L2 order book snapshots** from Hyperliquid
-2. Extract and sort **ask-side price levels**
-3. Simulate **market buy execution** by walking the ask ladder
-4. Compute **average execution price**
-5. Calculate **slippage vs mid-price**
-6. Identify **maximum notional size** with slippage ≤ 1%
-7. Plot **Slippage (%) vs Order Size ($)**
+- Exchange: Hyperliquid
+- Assets: ARB, OP, SUI
+- Total rebalance amount: $1,000,000
+- Order sizes tested:
+  - $50,000
+  - $200,000
+  - $1,000,000
+- Maximum allowed slippage: 1%
+
+---
+
+## Approach
+
+1. Fetch L2 order book data from Hyperliquid
+2. Use the ask side of the order book
+3. Simulate market buy orders by consuming available liquidity
+4. Calculate the average execution price
+5. Measure slippage compared to the mid price
+6. Find the maximum order size with slippage ≤ 1%
+7. Plot slippage vs order size
 
 ---
 
@@ -58,7 +54,7 @@ pip install hyperliquid-python-sdk
 
 ## Configuration
 
-Create configuration file:
+Copy the example config file:
 
 ```bash
 cp examples/config.json.example examples/config.json
@@ -73,10 +69,8 @@ Edit `examples/config.json`:
 }
 ```
 
-Optional: Generate an API wallet at
+Optional: You can create an API wallet at
 [https://app.hyperliquid.xyz/API](https://app.hyperliquid.xyz/API)
-
-Use the API wallet private key as `secret_key`, while keeping the **main wallet** as `account_address`.
 
 ---
 
@@ -87,8 +81,8 @@ from hyperliquid.info import Info
 from hyperliquid.utils import constants
 
 info = Info(constants.MAINNET_API_URL, skip_ws=True)
-l2_book = info.l2_book("ARB")
-print(l2_book)
+order_book = info.l2_book("ARB")
+print(order_book)
 ```
 
 ---
@@ -96,84 +90,59 @@ print(l2_book)
 ## Analysis Flow
 
 ```text
-L2 Order Book Snapshot
-        ↓
+Order Book (L2)
+   ↓
 Market Buy Simulation
-        ↓
+   ↓
 Average Execution Price
-        ↓
+   ↓
 Slippage Calculation
-        ↓
-Safe Position Size Cap
+   ↓
+Safe Position Size
 ```
 
 ---
 
-## Outputs
+## Output
 
 * Slippage vs order size charts
-* Safe allocation caps per asset
-* Liquidity comparison across assets
-* Execution-risk-aware allocation framework
+* Safe allocation limit for each asset
+* Comparison of liquidity across assets
 
 ---
 
-## Development Setup
+## Development
 
-* Python **3.10**
-* Poetry **1.x**
+Requirements:
+
+* Python 3.10
+* Poetry
+
+Install dependencies:
 
 ```bash
 make install
+```
+
+Run checks:
+
+```bash
 make lint
 make test
 ```
 
 ---
 
-## Deliverables Supported
-
-* Jupyter / Colab Notebook
-* Slippage vs Order Size charts
-* PDF execution risk summary
-* Loom explanation of slippage logic
-
----
-
-## Key Concepts Demonstrated
-
-* Market microstructure
-* Order book depth analysis
-* Liquidity-aware execution
-* Slippage modeling
-* Risk-managed index rebalancing
-
----
-
 ## License
 
-MIT License. See [LICENSE](LICENSE.md).
+MIT License.
 
 ---
 
-## Citation
+## Author
 
-```bibtex
-@misc{hyperliquid-slippage-safe-caps,
-  author = {Ayush Kumar Singh},
-  title = {Hyperliquid Order Book Slippage and Safe Position Sizing},
-  year = {2025},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/Ayushkumarsingh09/hyperliquid}}
-}
-```
-
----
-
-## Credits
-
-Built using Hyperliquid’s official Python SDK and inspired by institutional execution cost and market microstructure models.
+Ayush Kumar Singh
+[https://github.com/Ayushkumarsingh09](https://github.com/Ayushkumarsingh09)
 
 ```
-```
+
