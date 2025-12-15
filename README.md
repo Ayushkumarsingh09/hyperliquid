@@ -131,6 +131,30 @@ make lint
 make test
 ```
 
+# Google Colab Notebook
+
+This project is implemented and executed using **Google Colab**.
+
+## 📘 Notebook Link
+Access the complete Colab notebook here:  
+👉 https://colab.research.google.com/drive/1b5uSEov-nvXXalLX-dnuRLEdobxqljxq?usp=sharing
+
+## 🚀 How to Use
+1. Open the link above.
+2. Click on **File → Save a copy in Drive** (optional).
+3. Run the cells sequentially to reproduce results.
+
+## 🛠 Requirements
+- Google account
+- Internet connection
+
+## 📌 Notes
+- The notebook contains all code, explanations, and outputs.
+- No local setup is required.
+
+
+
+
 ---
 
 ## License
