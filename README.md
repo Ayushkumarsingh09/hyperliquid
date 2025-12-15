@@ -152,6 +152,16 @@ Access the complete Colab notebook here:
 - The notebook contains all code, explanations, and outputs.
 - No local setup is required.
 
+## 🎥 Loom Demo Video
+
+A complete walkthrough and explanation of the project is available in the Loom video below:
+
+👉 https://www.loom.com/share/4579b85f352f4f9d986ba67ca0a54fa9
+
+### How to Use
+- Open the link to watch the full demo.
+- The video explains the project flow, implementation, and results.
+
 
 
 
